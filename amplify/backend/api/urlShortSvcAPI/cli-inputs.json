@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/shorturl": {
+      "name": "/shorturl",
+      "lambdaFunction": "urlShortSvcAPIFunction",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

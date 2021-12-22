@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-urlshortsvc-dev-05400-authRole",
+      "UnauthRoleArn": "arn:aws:iam::089425808111:role/amplify-urlshortsvc-dev-05400-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::089425808111:role/amplify-urlshortsvc-dev-05400-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-urlshortsvc-dev-05400-deployment",
+      "UnauthRoleName": "amplify-urlshortsvc-dev-05400-unauthRole",
+      "StackName": "amplify-urlshortsvc-dev-05400",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:089425808111:stack/amplify-urlshortsvc-dev-05400/c9f0c4b0-6347-11ec-b547-0a7b4c05c63e",
+      "AmplifyAppId": "d36lpvk1h5t7o1"
+    },
+    "categories": {
+      "function": {
+        "urlShortSvcAPIFunction": {
+          "deploymentBucketName": "amplify-urlshortsvc-dev-05400-deployment",
+          "s3Key": "amplify-builds/urlShortSvcAPIFunction-4d535879456c50516e34-build.zip"
+        }
+      }
+    }
+  }
+}
