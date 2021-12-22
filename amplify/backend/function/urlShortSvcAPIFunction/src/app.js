@@ -33,30 +33,8 @@ const ShortUrlSchema = require('./models/short-url-schema')
  **********************/
 
 app.get('/shorturl', async function(req, res) {
-  // Add your code here
   const shortUrls = await ShortUrlSchema.find()
   res.json(shortUrls)
-  // res.json(
-  //   {
-  //     url_list: [
-  //         {
-  //           full: 'Example FULL 1',
-  //           short: 'Example Short 1',
-  //           clicks: 'Example Clicks 1'
-  //         },
-  //         {
-  //           full: 'Example FULL 2',
-  //           short: 'Example Short 2',
-  //           clicks: 'Example Clicks 2'
-  //         },
-  //         {
-  //           full: 'Example FULL 3',
-  //           short: 'Example Short 3',
-  //           clicks: 'Example Clicks 3'
-  //         }
-  //       ]
-  // });
-    // res.json({success: 'Testing One', url: req.url});
 });
 
 app.get('/shorturl/*', function(req, res) {
@@ -70,7 +48,7 @@ app.get('/shorturl/*', function(req, res) {
 
 app.post('/shorturl', function(req, res) {
   // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+  res.json({success: `Full URL = ${req.fullUrlLink}`})
 });
 
 app.post('/shorturl/*', function(req, res) {

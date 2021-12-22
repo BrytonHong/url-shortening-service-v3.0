@@ -17,7 +17,7 @@ function UrlListData() {
       .then(response => {
         console.log(`Response: ${JSON.stringify(response)}`)
         // response = JSON.parse(response)
-        setMessage(response.url_list);
+        setMessage(response);
 
       })
       .catch(error => {

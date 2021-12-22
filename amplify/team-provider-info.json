@@ -15,7 +15,7 @@
       "function": {
         "urlShortSvcAPIFunction": {
           "deploymentBucketName": "amplify-urlshortsvc-dev-05400-deployment",
-          "s3Key": "amplify-builds/urlShortSvcAPIFunction-4d535879456c50516e34-build.zip"
+          "s3Key": "amplify-builds/urlShortSvcAPIFunction-4c756f72354b6f7a5937-build.zip"
         }
       }
     }
