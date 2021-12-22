@@ -1,40 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-import {API} from 'aws-amplify';
-import React, { useState, useEffect } from "react";
+import React from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+
+import UrlListData from "./components/url-list-data";
+// import ShortenURL from "./components/shorten-url.component";
 
 function App() {
-
-  useEffect(() =>{
-    fetchUrlList()
-  },[])
-
-  const [message, setMessage] = useState('')
-
-  async function fetchUrlList(){
-
-    API
-      .get("urlShortSvcAPI", "/shorturl", {})
-      .then(response => {
-        setMessage(response.success)
-        console.log(`Response: ${response}`)
-      })
-      .catch(error =>{
-        console.log(error.response);
-      })
-  }
-
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          The message from my lambda is:
-        </p>
-        <h4>{message}</h4>
-      </header>
-    </div>
+    <Router>
+      <div className="container">
+      <br/>
+      {/* <ShortenURL /> */}
+      <Routes>
+      <Route path="/" exact element={<UrlListData/>} />
+      </Routes>
+      </div>
+    </Router>
   );
 }
 

@@ -20,19 +20,43 @@ app.use(awsServerlessExpressMiddleware.eventContext())
 
 // Enable CORS for all methods
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "*")
+  res.set("Access-Control-Allow-Origin", "*")
+  res.set("Access-Control-Allow-Headers", "*")
   next()
 });
 
+// Importing Schema
+const ShortUrlSchema = require('./models/short_url_schema')
 
 /**********************
  * Example get method *
  **********************/
 
-app.get('/shorturl', function(req, res) {
+app.get('/shorturl', async function(req, res) {
   // Add your code here
-  res.json({success: 'Testing Call One!', url: req.url});
+  const shortUrls = await ShortUrlSchema.find()
+  res.json(shortUrls)
+  // res.json(
+  //   {
+  //     url_list: [
+  //         {
+  //           full: 'Example FULL 1',
+  //           short: 'Example Short 1',
+  //           clicks: 'Example Clicks 1'
+  //         },
+  //         {
+  //           full: 'Example FULL 2',
+  //           short: 'Example Short 2',
+  //           clicks: 'Example Clicks 2'
+  //         },
+  //         {
+  //           full: 'Example FULL 3',
+  //           short: 'Example Short 3',
+  //           clicks: 'Example Clicks 3'
+  //         }
+  //       ]
+  // });
+    // res.json({success: 'Testing One', url: req.url});
 });
 
 app.get('/shorturl/*', function(req, res) {
