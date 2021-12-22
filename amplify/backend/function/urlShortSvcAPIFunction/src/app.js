@@ -48,7 +48,8 @@ app.get('/shorturl/*', function(req, res) {
 
 app.post('/shorturl', function(req, res) {
   // Add your code here
-  res.json({success: `Full URL = ${req.fullUrlLink}`})
+  console.log(JSON.stringify(req))
+  res.json({success: `Full URL = ${req}`,  url: req.url, body: req.body})
 });
 
 app.post('/shorturl/*', function(req, res) {
