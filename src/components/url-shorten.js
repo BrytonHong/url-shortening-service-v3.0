@@ -3,22 +3,20 @@ import React, { useState, useEffect } from "react";
 
 function UrlShorten() {
 
-  useEffect(() => {
-    submitURL()
-  }, [])
-
   const [fullUrl, setFullUrl] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    alert(`The name you entered was: ${fullUrl}`);
+    submitURL(fullUrl)
   }
 
-  async function submitURL() {
+  function submitURL() {
 
     API
-      .post("urlShortSvcAPI", "/shorturl", {fullUrlLink: fullUrl})
+      .post("urlShortSvcAPI", "/shorturl",{body:{fullUrlLink: fullUrl}})
       .then(response => {
-        console.log(`Response: ${response}`)
+        console.log(`Response: ${JSON.stringify(response)}`)
       })
       .catch(error => {
         console.log(error);
@@ -31,7 +29,7 @@ function UrlShorten() {
       <form onSubmit={handleSubmit} method="POST" class="my-4 form-inline">
           <label for="fullUrl" class="sr-only">Full URL</label>
           <input value={fullUrl} onChange={(e) => setFullUrl(e.target.value)} placeholder="Full URL" type="url" name="fullUrl" 
-          id="fullUrl" class="form-control col mr-2"></input>
+          id="fullUrl" class="form-control col mr-2"/>
           <button class="btn btn-success" type="submit">Shorten</button>
       </form>
     </div>
