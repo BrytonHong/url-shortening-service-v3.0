@@ -26,7 +26,7 @@ app.use(function(req, res, next) {
 });
 
 // Importing Schema
-const ShortUrlSchema = require('./models/short_url_schema')
+const ShortUrlSchema = require('./models/short-url-schema')
 
 /**********************
  * Example get method *
