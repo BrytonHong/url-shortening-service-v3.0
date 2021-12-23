@@ -68,8 +68,9 @@ app.get('/shorturl', async function(req, res) {
 app.get('/shorturl/:redirecturl', async function(req, res) {
 
   const shortUrl = await ShortUrlSchema.findOne({short: req.params.redirecturl})
-  console.log(shortUrl)
+  console.log("Pass 1")
   if(shortUrl == null) return res.sendStatus(404)
+  console.log("Pass 2")
   console.log('Clicks 1 ',shortUrl.clicks)
   shortUrl.clicks++
   console.log('Clicks 2 ',shortUrl.clicks)
@@ -84,13 +85,13 @@ app.get('/shorturl/:redirecturl', async function(req, res) {
 * Example post method *
 ****************************/
 
-// app.post('/shorturl', async function(req, res) {
-//   // Add your code here
-//   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
-//   // res.json({success: `Full URL = ${req}`,  url: req.url, body: req.body})
-//   await ShortUrlSchema.create({full: req.body.fullUrlLink})
-//   res.sendStatus(200)
-// });
+app.post('/shorturl', async function(req, res) {
+  // Add your code here
+  console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+  // res.json({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+  await ShortUrlSchema.create({full: req.body.fullUrlLink})
+  res.sendStatus(200)
+});
 
 // app.post('/shorturl/redirecturl', async function(req, res) {
 //   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
