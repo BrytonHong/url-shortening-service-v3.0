@@ -51,8 +51,7 @@ app.post('/shorturl', async function(req, res) {
   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
   // res.json({success: `Full URL = ${req}`,  url: req.url, body: req.body})
   await ShortUrlSchema.create({full: req.body.fullUrlLink})
-  res.sendStatus(200)//.sendStatus(200)
-  res.redirect('/shorturl')//.redirect('/')
+  res.sendStatus(200)
 });
 
 app.post('/shorturl/*', function(req, res) {
