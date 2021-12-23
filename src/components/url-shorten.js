@@ -15,7 +15,7 @@ function UrlShorten() {
       submitURL(fullUrl)
     }
     else{
-      alert(`Unable to submit: ${fullUrl}`);
+      alert(`Unable to submit blank`);
     }
 
     setFullUrl('')
