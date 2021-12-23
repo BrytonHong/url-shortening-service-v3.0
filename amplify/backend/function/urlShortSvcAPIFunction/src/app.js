@@ -8,7 +8,7 @@ See the License for the specific language governing permissions and limitations 
 
 
 
-
+var https = require('https');
 var express = require('express')
 var bodyParser = require('body-parser')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
@@ -17,6 +17,7 @@ var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware'
 var app = express()
 app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
+https.createServer(app)
 
 // Enable CORS for all methods
 app.use(function(req, res, next) {
@@ -34,77 +35,102 @@ const ShortUrlSchema = require('./models/short-url-schema')
 
 app.get('/shorturl', async function(req, res) {
   const shortUrls = await ShortUrlSchema.find()
-  res.json(shortUrls)
+  console.log(shortUrls)
+
+  let urlArray = []
+  let redirectUrl = ''
+  // let i =0;
+  function urlMapper(dataArray){
+
+      dataArray.forEach(e => {
+        // i++
+          redirectUrl = `${req.protocol}://${req.headers.host}/${process.env.ENV}${req.url}/${e.short}`;
+          // console.log(i, redirectUrl)
+          Object.assign(e, {newUrl: redirectUrl})
+          // console.log('Obj',e)
+          urlArray.push({
+            id: e._id,
+            full: e.full,
+            short: e.short,
+            clicks: e.clicks,
+            newUrl: redirectUrl
+          })
+      });
+
+      return urlArray
+  }
+  urlMapper(shortUrls)
+  // console.log('shortUrls', shortUrls)
+  // console.log('urlArray', urlArray)
+  res.json(urlArray)
 });
 
-// app.get('/shorturl/redirecturl', async function(req, res) {
+app.get('/shorturl/:redirecturl', async function(req, res) {
 
-//   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
-//   // console.log('Redirect URL = ', req)
-//   // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
-
-//   const shortUrl = await ShortUrlSchema.findOne({short: req.body.redirect}, function (err, shorturlschema) {})
-//   console.log(shortUrl)
-//   if(shortUrl == null) return res.sendStatus(404)
-
-//   shortUrl.clicks++
-//   shortUrl.save()
-//   res.redirect(shortUrl.full)
-// });
-
-/****************************
-* Example post method *
-****************************/
-
-app.post('/shorturl', async function(req, res) {
-  // Add your code here
-  console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
-  // res.json({success: `Full URL = ${req}`,  url: req.url, body: req.body})
-  await ShortUrlSchema.create({full: req.body.fullUrlLink})
-  res.sendStatus(200)
-});
-
-app.post('/shorturl/redirecturl', async function(req, res) {
-  console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
-  // console.log('Redirect URL = ', req)
-  // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
-
-  const shortUrl = await ShortUrlSchema.findOne({short: req.body.redirect});
+  const shortUrl = await ShortUrlSchema.findOne({short: req.params.redirecturl})
   console.log(shortUrl)
   if(shortUrl == null) return res.sendStatus(404)
 
   shortUrl.clicks++
   // shortUrl.save()
   res.redirect(shortUrl.full)
+  // console.log(`${req.protocol}://${req.headers.host}/${process.env.ENV}/${req.url}`)
+  // res.json({redirectedUrl: `${req.protocol}://${req.headers.host}/${process.env.ENV}${req.url}`})
 });
+
+/****************************
+* Example post method *
+****************************/
+
+// app.post('/shorturl', async function(req, res) {
+//   // Add your code here
+//   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+//   // res.json({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+//   await ShortUrlSchema.create({full: req.body.fullUrlLink})
+//   res.sendStatus(200)
+// });
+
+// app.post('/shorturl/redirecturl', async function(req, res) {
+//   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+//   // console.log('Redirect URL = ', req)
+//   // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
+
+//   const shortUrl = await ShortUrlSchema.findOne({short: req.body.redirect});
+//   console.log(shortUrl)
+//   if(shortUrl == null) return res.sendStatus(404)
+
+//   shortUrl.clicks++
+//   // shortUrl.save()
+//   res.redirect(shortUrl.full)
+// });
 
 /****************************
 * Example put method *
 ****************************/
 
-app.put('/shorturl', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
+// app.put('/shorturl', function(req, res) {
+//   // Add your code here
+//   res.json({success: 'put call succeed!', url: req.url, body: req.body})
+// });
 
-app.put('/shorturl/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
+// app.put('/shorturl/*', function(req, res) {
+//   // Add your code here
+//   res.json({success: 'put call succeed!', url: req.url, body: req.body})
+// });
 
-/****************************
-* Example delete method *
-****************************/
+// /****************************
+// * Example delete method *
+// ****************************/
 
-app.delete('/shorturl', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
+// app.delete('/shorturl', function(req, res) {
+//   // Add your code here
+//   res.json({success: 'delete call succeed!', url: req.url});
+// });
 
-app.delete('/shorturl/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
+// app.delete('/shorturl/*', function(req, res) {
+//   // Add your code here
+//   res.json({success: 'delete call succeed!', url: req.url});
+// });
 
 app.listen(3000, function() {
     console.log("App started")

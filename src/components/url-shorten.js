@@ -10,10 +10,16 @@ function UrlShorten() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // alert(`The name you entered was: ${fullUrl}`);
-    submitURL(fullUrl)
+
+    if(fullUrl !== null && fullUrl !=='') {
+      submitURL(fullUrl)
+    }
+    else{
+      alert(`Unable to submit: ${fullUrl}`);
+    }
+
     setFullUrl('')
-    // event.target.reset();
+
   }
 
   function submitURL() {
@@ -22,6 +28,7 @@ function UrlShorten() {
       .post("urlShortSvcAPI", "/shorturl",{body:{fullUrlLink: fullUrl}})
       .then(response => {
         console.log(`Response: ${JSON.stringify(response)}`)
+        window.location.reload(false);
       })
       .catch(error => {
         console.log(error);

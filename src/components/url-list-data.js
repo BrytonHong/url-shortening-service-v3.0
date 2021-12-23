@@ -1,6 +1,5 @@
 import { API } from 'aws-amplify';
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 function UrlListData() {
 
@@ -26,6 +25,7 @@ function UrlListData() {
         setMessage(response);
 
       })
+      .then()
       .catch(error => {
         console.log(error);
       })
@@ -34,10 +34,10 @@ function UrlListData() {
   function redirectShortUrl(value) {
 
     API 
-      .post("urlShortSvcAPI", "/shorturl/redirecturl", {body:{redirect: value}})
+      .get("urlShortSvcAPI", `/shorturl/${value}`, {})
       .then(response => {
         console.log(response)
-        return response;
+        // return response;
       })
       .catch(error => {
         console.log(error);
@@ -59,7 +59,7 @@ function UrlListData() {
           {message.map(row => (
             <tr>
               <td><a href={row.full}>{row.full}</a></td>
-              <td><a href="#"onClick={() => { handleClick(row.short);}}>{row.short}</a></td>
+              <td><a href={row.newUrl}>{row.short}</a></td>
               <td>{row.clicks}</td>
             </tr>
           ))}
