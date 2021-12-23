@@ -46,10 +46,13 @@ app.get('/shorturl/*', function(req, res) {
 * Example post method *
 ****************************/
 
-app.post('/shorturl', function(req, res) {
+app.post('/shorturl', async function(req, res) {
   // Add your code here
-  console.log(req)
-  res.json({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+  console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+  // res.json({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+  await ShortUrlSchema.create({full: req.body.fullUrlLink})
+  res.sendStatus(200)//.sendStatus(200)
+  res.redirect('/shorturl')//.redirect('/')
 });
 
 app.post('/shorturl/*', function(req, res) {
