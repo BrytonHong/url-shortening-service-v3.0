@@ -58,15 +58,15 @@ app.post('/shorturl/redirecturl', async function(req, res) {
 
   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
   console.log('Redirect URL = ', req)
-  res.json({success: 'get call succeed!',  url: req.url, body: req.body});
+  // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
 
-  // const shortUrl = await ShortUrlSchema.findOne({short: req.params.shortUrl})
+  const shortUrl = await ShortUrlSchema.findOne({short: req.body.redirect})
 
-  // if(shortUrl == null) return res.sendStatus(404)
+  if(shortUrl == null) return res.sendStatus(404)
 
-  // shortUrl.clicks++
-  // shortUrl.save()
-  // res.redirect(shortUrl.full)
+  shortUrl.clicks++
+  shortUrl.save()
+  res.redirect(shortUrl.full)
 });
 
 /****************************

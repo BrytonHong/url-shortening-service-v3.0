@@ -9,11 +9,11 @@ function UrlListData() {
   }, [])
 
   const [message, setMessage] = useState([])
-  const [redirectUrl, setRedirectUrl] = useState('')
 
-  const handleClick = () =>{
-    console.log("Redirect URL = ",redirectUrl)
-    redirectShortUrl(redirectUrl)
+  const handleClick = (value) =>{
+
+    console.log("Redirect URL = ",value)
+    redirectShortUrl(value)
   }
 
   function fetchUrlList() {
@@ -31,15 +31,12 @@ function UrlListData() {
       })
   }
 
-  function redirectShortUrl(redirecturl) {
+  function redirectShortUrl(value) {
 
-    API
-      .get("urlShortSvcAPI", "/shorturl/redirecturl", {redirect: redirecturl})
+    API 
+      .post("urlShortSvcAPI", "/shorturl/redirecturl", {body:{redirect: value}})
       .then(response => {
         console.log(`Response: ${JSON.stringify(response)}`)
-        // // response = JSON.parse(response)
-        // setMessage(response);
-
       })
       .catch(error => {
         console.log(error);
@@ -61,7 +58,7 @@ function UrlListData() {
           {message.map(row => (
             <tr>
               <td><a href={row.full}>{row.full}</a></td>
-              <td><a href="#"onClick={() => { handleClick(); setRedirectUrl(row.short);}}>{row.short}</a></td>
+              <td><a href="#"onClick={() => { handleClick(row.short);}}>{row.short}</a></td>
               <td>{row.clicks}</td>
             </tr>
           ))}
