@@ -1,5 +1,5 @@
 {
-  "name": "url-shortening-service-v3.0",
+  "name": "url_shortening_service",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
