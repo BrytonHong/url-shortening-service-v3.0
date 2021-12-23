@@ -72,7 +72,7 @@ app.get('/shorturl/:redirecturl', async function(req, res) {
   if(shortUrl == null) return res.sendStatus(404)
 
   shortUrl.clicks++
-  // shortUrl.save()
+  shortUrl.save()
   res.redirect(shortUrl.full)
   // console.log(`${req.protocol}://${req.headers.host}/${process.env.ENV}/${req.url}`)
   // res.json({redirectedUrl: `${req.protocol}://${req.headers.host}/${process.env.ENV}${req.url}`})
