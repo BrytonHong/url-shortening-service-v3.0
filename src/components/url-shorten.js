@@ -1,5 +1,8 @@
 import { API } from 'aws-amplify';
 import React, { useState } from "react";
+import UrlListData from "./url-list-data";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+
 
 function UrlShorten() {
 
@@ -7,8 +10,10 @@ function UrlShorten() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`The name you entered was: ${fullUrl}`);
+    // alert(`The name you entered was: ${fullUrl}`);
     submitURL(fullUrl)
+    setFullUrl('')
+    // event.target.reset();
   }
 
   function submitURL() {

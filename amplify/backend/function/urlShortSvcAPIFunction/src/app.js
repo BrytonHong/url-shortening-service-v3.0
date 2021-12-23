@@ -37,8 +37,8 @@ app.get('/shorturl', async function(req, res) {
   res.json(shortUrls)
 });
 
-app.get('/shorturl/*', function(req, res) {
-  // Add your code here
+app.get('/shorturl/redirecturl', function(req, res) {
+  console.log('Redirect URL = ', req.body.redirect)
   res.json({success: 'get call succeed!', url: req.url});
 });
 

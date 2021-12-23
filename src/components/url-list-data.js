@@ -1,5 +1,6 @@
 import { API } from 'aws-amplify';
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function UrlListData() {
 
@@ -8,9 +9,14 @@ function UrlListData() {
   }, [])
 
   const [message, setMessage] = useState([])
-  // let props
+  const [redirectUrl, setRedirectUrl] = useState('')
 
-  async function fetchUrlList() {
+  const handleClick = () =>{
+    console.log("Redirect URL = ",redirectUrl)
+    redirectShortUrl(redirectUrl)
+  }
+
+  function fetchUrlList() {
 
     API
       .get("urlShortSvcAPI", "/shorturl", {})
@@ -24,6 +30,22 @@ function UrlListData() {
         console.log(error);
       })
   }
+
+  function redirectShortUrl(redirecturl) {
+
+    API
+      .get("urlShortSvcAPI", "/shorturl/redirecturl", {redirect: redirecturl})
+      .then(response => {
+        console.log(`Response: ${JSON.stringify(response)}`)
+        // // response = JSON.parse(response)
+        // setMessage(response);
+
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
 
   return (
     <div>
@@ -39,7 +61,7 @@ function UrlListData() {
           {message.map(row => (
             <tr>
               <td><a href={row.full}>{row.full}</a></td>
-              <td><a href={row.full}>{row.short}</a></td>
+              <td><a href="#"onClick={() => { handleClick(); setRedirectUrl(row.short);}}>{row.short}</a></td>
               <td>{row.clicks}</td>
             </tr>
           ))}
