@@ -65,8 +65,6 @@ app.post('/shorturl', async function(req, res) {
 });
 
 app.post('/shorturl/redirecturl', async function(req, res) {
-  res.set("Access-Control-Allow-Origin", "*")
-  res.set("Access-Control-Allow-Headers", "*")
   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
   // console.log('Redirect URL = ', req)
   // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
