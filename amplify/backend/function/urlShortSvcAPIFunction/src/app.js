@@ -37,20 +37,20 @@ app.get('/shorturl', async function(req, res) {
   res.json(shortUrls)
 });
 
-app.get('/shorturl/redirecturl', async function(req, res) {
+// app.get('/shorturl/redirecturl', async function(req, res) {
 
-  console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
-  // console.log('Redirect URL = ', req)
-  // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
+//   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+//   // console.log('Redirect URL = ', req)
+//   // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
 
-  const shortUrl = await ShortUrlSchema.findOne({short: req.body.redirect}, function (err, shorturlschema) {})
-  console.log(shortUrl)
-  if(shortUrl == null) return res.sendStatus(404)
+//   const shortUrl = await ShortUrlSchema.findOne({short: req.body.redirect}, function (err, shorturlschema) {})
+//   console.log(shortUrl)
+//   if(shortUrl == null) return res.sendStatus(404)
 
-  shortUrl.clicks++
-  shortUrl.save()
-  res.redirect(shortUrl.full)
-});
+//   shortUrl.clicks++
+//   shortUrl.save()
+//   res.redirect(shortUrl.full)
+// });
 
 /****************************
 * Example post method *
@@ -64,20 +64,21 @@ app.post('/shorturl', async function(req, res) {
   res.sendStatus(200)
 });
 
-// app.post('/shorturl/redirecturl', async function(req, res) {
+app.post('/shorturl/redirecturl', async function(req, res) {
+  res.set("Access-Control-Allow-Origin", "*")
+  res.set("Access-Control-Allow-Headers", "*")
+  console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
+  // console.log('Redirect URL = ', req)
+  // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
 
-//   console.log({success: `Full URL = ${req}`,  url: req.url, body: req.body})
-//   // console.log('Redirect URL = ', req)
-//   // res.json({success: 'get call succeed!',  url: req.url, body: req.body});
+  const shortUrl = await ShortUrlSchema.findOne({short: req.body.redirect});
+  console.log(shortUrl)
+  if(shortUrl == null) return res.sendStatus(404)
 
-//   const shortUrl = await ShortUrlSchema.findOne({short: req.body.redirect})
-//   console.log(shortUrl)
-//   if(shortUrl == null) return res.sendStatus(404)
-
-//   shortUrl.clicks++
-//   shortUrl.save()
-//   res.redirect(shortUrl.full)
-// });
+  shortUrl.clicks++
+  // shortUrl.save()
+  res.redirect(shortUrl.full)
+});
 
 /****************************
 * Example put method *

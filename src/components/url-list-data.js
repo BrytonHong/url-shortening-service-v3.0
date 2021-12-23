@@ -36,7 +36,8 @@ function UrlListData() {
     API 
       .post("urlShortSvcAPI", "/shorturl/redirecturl", {body:{redirect: value}})
       .then(response => {
-        console.log(`Response: ${JSON.stringify(response)}`)
+        console.log(response)
+        return response;
       })
       .catch(error => {
         console.log(error);
