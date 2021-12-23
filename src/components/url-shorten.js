@@ -1,8 +1,5 @@
 import { API } from 'aws-amplify';
 import React, { useState } from "react";
-import UrlListData from "./url-list-data";
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
-
 
 function UrlShorten() {
 

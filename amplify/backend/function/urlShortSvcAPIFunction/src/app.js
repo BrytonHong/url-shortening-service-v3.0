@@ -70,9 +70,11 @@ app.get('/shorturl/:redirecturl', async function(req, res) {
   const shortUrl = await ShortUrlSchema.findOne({short: req.params.redirecturl})
   console.log(shortUrl)
   if(shortUrl == null) return res.sendStatus(404)
-
+  console.log('Clicks 1 ',shortUrl.clicks)
   shortUrl.clicks++
+  console.log('Clicks 2 ',shortUrl.clicks)
   shortUrl.save()
+  console.log('Clicks 3 ',shortUrl.clicks)
   res.redirect(shortUrl.full)
   // console.log(`${req.protocol}://${req.headers.host}/${process.env.ENV}/${req.url}`)
   // res.json({redirectedUrl: `${req.protocol}://${req.headers.host}/${process.env.ENV}${req.url}`})

@@ -9,12 +9,6 @@ function UrlListData() {
 
   const [message, setMessage] = useState([])
 
-  const handleClick = (value) =>{
-
-    console.log("Redirect URL = ",value)
-    redirectShortUrl(value)
-  }
-
   function fetchUrlList() {
 
     API
@@ -30,20 +24,6 @@ function UrlListData() {
         console.log(error);
       })
   }
-
-  function redirectShortUrl(value) {
-
-    API 
-      .get("urlShortSvcAPI", `/shorturl/${value}`, {})
-      .then(response => {
-        console.log(response)
-        // return response;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
 
   return (
     <div>
